@@ -1,37 +1,15 @@
-
-<div class="container">
-  <div class="row">
-    <div class="col-md-4">
-      <label>total</label>
-      <input type="text"  class="form-control" (input)="onUpdateTotalInvoice($event)" >
-
-      <label >Drinks total</label>
-      <input class="form-control" (input)="onUpdateDrinksTotal($event)" >
-    </div>
-
-    <div class="col-md-2">
-      <button class="btn btn-primary" (click)="onCreateInvoice()">add invoice</button>
-    </div>
-  </div>
-
-
-  <table class="table">
-    <thead class="thead-dark">
-
-    <tr>
-      <th>Total</th>
-      <th>drinksTotal</th>
-
-    </tr>
-    </thead>
-
-    <tbody class="table-striped">
-    <tr *ngFor="let invoice of invoicesAddedStatic">
-      <td>{{total}}</td>
-      <td>{{drinksTotal}}</td>
-    </tr>
-    </tbody>
-  </table>
-
-
-</div>
+<form class="example-form">
+  <mat-form-field class="example-full-width">
+    <input type="text"
+           placeholder="Pick one"
+           aria-label="Number"
+           matInput
+           [formControl]="myControl"
+           [matAutocomplete]="auto">
+    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+      <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+        {{option}}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+</form>

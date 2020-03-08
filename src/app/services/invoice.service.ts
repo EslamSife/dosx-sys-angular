@@ -1,30 +1,54 @@
-import { Injectable } from '@angular/core';
+import {EventEmitter, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {Invoice} from '../common/invoice';
+import {Invoice} from '../common/model/invoice.model';
 import {map} from 'rxjs/operators';
 
-@Injectable({
-  providedIn: 'root'
-})
-export class InvoiceService  {
+@Injectable()
+export class InvoiceService {
 
-  invoicesAddedStatic = [
-    {
-      total: 533,
-      drinksTotal: 20
-    }
-  ];
+  invoiceSelected = new EventEmitter<Invoice>();
 
   private baseUrl = 'http://localhost:8080/api/invoices';
 
-  constructor(private httpClient: HttpClient) { }
+  /*
 
-  addInvoice(total: number, drinksTotal: number) {
-    this.invoicesAddedStatic.push({total, drinksTotal});
+  private invoices: Invoice[] = [
+    new Invoice(
+      'Tasty Schnitzel',
+      100,
+      200,
+    ),
+    new Invoice('Big Fat Burger',
+      300,
+      500,
+    )
+  ];
+
+
+  constructor() {
   }
 
-  getInvoiceList(): Observable<Invoice[]>  {
+
+  getInvoices() {
+    return this.invoices.slice();
+  }
+}
+
+*/
+
+
+
+  constructor(private httpClient: HttpClient) {
+  }
+
+
+
+
+
+
+   // get real data from database
+  getInvoiceList(): Observable<Invoice[]> {
     return this.httpClient.get<GetResponse>(this.baseUrl).pipe(
       map(response => response._embedded.invoices)
     );
@@ -37,3 +61,4 @@ interface GetResponse {
     invoices: Invoice[];
   };
 }
+

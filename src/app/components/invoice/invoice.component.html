@@ -1,0 +1,13 @@
+<div class="row">
+  <div class="col-md-5">
+    <app-invoice-list></app-invoice-list>
+  </div>
+  <div class="col-md-7">
+    <app-invoice-detail
+      *ngIf="selectedInvoice; else infoText"
+      [invoice]="selectedInvoice"></app-invoice-detail>
+    <ng-template #infoText>
+      <p>Please select a Recipe!</p>
+    </ng-template>
+  </div>
+</div>

@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {InvoiceService} from '../../../services/invoice.service';
-import {Invoice} from '../../../common/invoice';
+import {Invoice} from '../../../common/model/invoice.model';
 
 
 @Component({
@@ -10,21 +10,17 @@ import {Invoice} from '../../../common/invoice';
 })
 export class InvoiceListComponent implements OnInit {
 
-
-  invoicesAddedStatic: {total: number, drinksTotal: number} [] = [];
-
   invoices: Invoice[];
+
+
   constructor(private invoiceService: InvoiceService) { }
 
   ngOnInit() {
+    // this.invoices = this.invoiceService.getInvoices();
     this.listInvoices();
   }
 
-
-  addInvoice(totalUserInput, drinksTotalUserInput) {
-    this.invoicesAddedStatic.push({total: totalUserInput, drinksTotal: drinksTotalUserInput});
-  }
-
+  // get real data from database
   private listInvoices() {
     this.invoiceService.getInvoiceList().subscribe(
       data => {
@@ -32,4 +28,7 @@ export class InvoiceListComponent implements OnInit {
       }
     );
   }
+
+
+
 }

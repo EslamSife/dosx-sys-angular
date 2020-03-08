@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {InvoiceService} from '../../../services/invoice.service';
+import {FormControl} from '@angular/forms';
+import {Observable} from 'rxjs';
+import {map, startWith} from 'rxjs/operators';
+
 
 @Component({
   selector: 'app-new-invoice',
@@ -7,31 +10,19 @@ import {InvoiceService} from '../../../services/invoice.service';
   styleUrls: ['./new-invoice.component.css']
 })
 export class NewInvoiceComponent implements OnInit {
-
-
-  invoicesAddedStatic: {total: number, drinksTotal: number} [] = [];
-  total = 0;
-  drinksTotal = 0;
-  constructor(private invoiceService: InvoiceService) { }
+  myControl = new FormControl();
+  options: string[] = ['One', 'Two', 'Three'];
+  filteredOptions: Observable<string[]>;
 
   ngOnInit() {
-    this.invoicesAddedStatic = this.invoiceService.invoicesAddedStatic;
+    this.filteredOptions = this.myControl.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filter(value))
+    );
   }
 
-
-
-
-  onCreateInvoice() {
-
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+    return this.options.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
   }
-
-
-  onUpdateTotalInvoice(event: Event) {
-    this.total = Number((event.target as HTMLInputElement).value);
-  }
-
-  onUpdateDrinksTotal(event: Event) {
-    this.drinksTotal = Number((event.target as HTMLInputElement).value);
-  }
-
 }
